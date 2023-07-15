@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "task": {
+      "title": "Clean office space",
+      "description": "I want to clean my office table, mop the floor, and vacuum the chair. "
+    },
+    "points": 3,
+    "type": "notStarted",
+    "priority": "High"
+  },
+  {
+    "id": 2,
+    "task": {
+      "title": "Build a space ship ",
+      "description": "I want to build a space so that I can fly to the moon & back"
+    },
+    "points": 3,
+    "type": "started",
+    "priority": "Low"
+  },
+  {
+    "id": 3,
+    "task": {
+      "title": "Design a spacesuit",
+      "description": "I want to design a spacesuit, construct one, and test it. "
+    },
+    "points": 3,
+    "type": "completed",
+    "priority": "Medium"
+  },
+  {
+    "id": 4,
+    "task": {
+      "title": "Wear a spacesuit",
+      "description": "I want to design a spacesuit, construct one, and test it. "
+    },
+    "points": 3,
+    "type": "completed",
+    "priority": "Medium"
+  }
+]

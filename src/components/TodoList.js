@@ -1,9 +1,4 @@
-import { HStack, VStack,Text, Flex, Badge,Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
-    ModalBody,
+import { HStack, VStack,Text, Flex, Badge,Modal,ModalOverlay,ModalContent,ModalHeader,ModalFooter,ModalBody,
     ModalCloseButton, Button, Input, Divider } from '@chakra-ui/react'
 import { DeleteIcon, EditIcon} from '@chakra-ui/icons'
 import React,{useState} from 'react'
@@ -11,7 +6,9 @@ import React,{useState} from 'react'
 
 function TodoList({ todos, deleteTodo, editTodo }) {
 const [todo, setTodo] = useState(""); 
+//set the todo value in the modal:
 const [modalValue, setModalValue] = useState({})
+//hook to close the modal when user is done editing:
 const [isOpen,setIsOpen] = useState(false)   
 
 function onClose(){
@@ -19,21 +16,18 @@ function onClose(){
   }
 
 function handleEditClick(todo){
-    setIsOpen(true)
+   setIsOpen(true)
 // we've set the passed todo to modal value
-    setModalValue(todo)
-    console.log(todo)
+   setModalValue(todo)
+   console.log(todo)
 }
 
-function handleEditInputChange(e,id){
- 
+function handleEditInputChange(e,id){ 
 setModalValue({ ...modalValue, text: e.target.value });
-console.log(modalValue,id) 
 }
 
 function handleEditSubmit(e){
   e.preventDefault();
- 
   editTodo(modalValue.id,modalValue)
   setModalValue("")
   setIsOpen(false)
@@ -60,9 +54,8 @@ function handleEditSubmit(e){
                 <Flex w="10px" >
                 
                 <DeleteIcon color="red.500" mr="2" onClick={()=>deleteTodo(todo.id)}/>
-                <EditIcon onClick={()=>handleEditClick(todo)} />
-                 
-                </Flex>
+                <EditIcon onClick={()=>handleEditClick(todo)} />    
+            </Flex>
                 
             {/* modal for editing a todo */}
             <Modal isOpen={isOpen} onClose={onClose}>
@@ -92,19 +85,10 @@ function handleEditSubmit(e){
           
           </ModalContent>
           </Modal>
-         
-
         </Flex> 
-  
-            </HStack>  
-            
+            </HStack>   
             ))} 
-          
         </VStack>
         ) 
-        ) 
-    
-    }   
-
-
+        )  }   
 export default TodoList
