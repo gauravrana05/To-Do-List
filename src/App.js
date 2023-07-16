@@ -1,3 +1,4 @@
+import { nanoid } from 'nanoid';
 import {
   HStack,
   VStack,
@@ -15,6 +16,8 @@ import {
   Textarea,
   FormLabel,
   FormControl,
+  Select,
+  Flex,
 } from "@chakra-ui/react"
 import "./css/App.css"
 import { useState } from "react"
@@ -24,10 +27,10 @@ import DisplayList from "./components/DisplayList"
 function App() {
   const [tasks, setTasks] = useState(taskList)
 
-  const [modalTitle, setModalTitle] = useState({})
-  const [modalDescription, setModalDescription] = useState({})
+  const [modalTitle, setModalTitle] = useState("")
+  const [modalDescription, setModalDescription] = useState("")
   const [modalPriority, setModalPriority] = useState({})
-  const [modalPoints, setModalPoints] = useState({})
+  const [modalPoints, setModalPoints] = useState()
   const [modalStatus, setModalStatus] = useState({})
 
   const [isOpen, setIsOpen] = useState(false)
@@ -39,36 +42,53 @@ function App() {
   function handleCreateClick() {
     setIsOpen(true)
   }
-  function handleTitleInputChange(e, id) {
-    setModalTitle({ ...modalTitle, text: e.target.value })
-    console.log(modalTitle, id)
+  function handleTitleInputChange(e) {
+    setModalTitle(e.target.value)
+    console.log(modalTitle);
   }
-  function handleDescriptionInputChange(e, id) {
-    setModalDescription({ ...modalDescription, text: e.target.value })
-    console.log(modalDescription, id)
-  }
-
-  function handlePriorityInputChange(e, id) {
-    setModalPriority({ ...modalPriority, text: e.target.value })
-    console.log(modalPriority, id)
+  function handleDescriptionInputChange(e) {
+    setModalDescription(e.target.value)
   }
 
-  function handleStatusInputChange(e, id) {
-    setModalStatus({ ...modalStatus, text: e.target.value })
-    console.log(modalStatus, id)
+  function handlePriorityInputChange(e) {
+    setModalPriority( e.target.value )
+    console.log(modalPriority);
   }
 
-  function handlePointsInputChange(e, id) {
-    setModalPoints({ ...modalPoints, text: e.target.value })
-    console.log(modalPoints, id)
+  function handleStatusInputChange(e) {
+    setModalStatus( e.target.value )
+    console.log(modalStatus)
+  }
+
+  function handlePointsInputChange(e) {
+    setModalPoints( e.target.value )
+
+  }
+
+  function addTask(newTask) {
+    setTasks([...tasks, newTask])
   }
   function handleCreateSubmit(e) {
     e.preventDefault()
+    const task = {
+      id : tasks.length + 1,
+      text : {
+        title: modalTitle,
+        description: modalDescription,
+      },
+      points : modalPoints,
+      type: modalStatus,
+      priority: modalPriority
+    }
+
+    console.log(task);
+    addTask(task)
+
     setModalTitle("")
     setModalDescription("")
-    setModalPoints()
-    setModalPriority()
-    setModalStatus()
+    setModalPoints(0)
+    setModalPriority({})
+    setModalStatus({})
     setIsOpen(false)
   }
 
@@ -92,34 +112,71 @@ function App() {
             <ModalCloseButton />
             <form onSubmit={handleCreateSubmit}>
               <ModalBody>
-                <FormControl>
-                <FormLabel>Task Name: </FormLabel>
-                <Input
-                  value={modalTitle.text}
-                  key={modalTitle.id}
-                  variant="outline"
-                  type="text"
-                  placeholder="Enter Task..."
-                  onChange={handleTitleInputChange}
-                />
+                <FormControl m={3}>
+                  <FormLabel>Task Name: </FormLabel>
+                  <Input
+                    value={modalTitle}
+                    variant="outline"
+                    type="text"
+                    placeholder="Enter Task..."
+                    onChange={handleTitleInputChange}
+                  />
                 </FormControl>
-                <FormControl>
+                <FormControl m={3}>
                   <FormLabel>Enter Description here: </FormLabel>
-                <Textarea
-                  value={modalDescription.text}
-                  key={modalDescription.id}
-                  variant="outline"
-                  type="text"
-                  placeholder="Description"
-                  onChange={handleDescriptionInputChange}
-                /></FormControl>
+                  <Textarea
+                    value={modalDescription}
+                    variant="outline"
+                    type="text"
+                    placeholder="Description"
+                    onChange={handleDescriptionInputChange}
+                  />
+                </FormControl>
+                <FormControl m={3} display="flex" alignItems="center">
+                  <FormLabel mb={0}>Story points: </FormLabel>
+                  <Input
+                    width={20}
+                    display="inline-block"
+                    value={modalPoints}
+                    variant="outline"
+                    type="number"
+                    placeholder="Points"
+                    onChange={handlePointsInputChange}
+                  />
+                  <Flex w="70%" justifyContent="space-evenly">
+                    <Select
+                      mx={7}
+                      width="40%"
+                      display="inline-block"
+                      placeholder="Choose Status"
+                      value={modalStatus}
+                      onChange={handleStatusInputChange}
+                    >
+                      <option value="started">Started</option>
+                      <option value="notStarted">Not Started</option>
+                      <option value="completed">Completed</option>
+                    </Select>
+                    <Select
+                      mx={7}
+                      width="40%"
+                      display="inline-block"
+                      placeholder="Priority"
+                      value={modalPriority}
+                      onChange={handlePriorityInputChange}
+                    >
+                      <option value="high">High</option>
+                      <option value="medium">Medium</option>
+                      <option value="low">Low</option>
+                    </Select>
+                  </Flex>
+                </FormControl>
               </ModalBody>
               <ModalFooter>
-                <Button colorScheme="teal" mr={3} onClick={onClose}>
+                <Button colorScheme="telegram" mr={3} onClick={onClose}>
                   Close
                 </Button>
-                <Button type="submit" colorScheme="teal" mr={3}>
-                  Update
+                <Button type="submit" colorScheme="facebook" mr={3}>
+                  Create
                 </Button>
               </ModalFooter>
             </form>

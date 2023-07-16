@@ -21,7 +21,6 @@ function Icon({ priority }) {
 
 function DisplayList({ tasks, category }) {
   let categoryTasks = tasks.filter(function check(task) {
-    console.log(task.type, "chal hat boddk", category)
     return task.type === category
   })
 

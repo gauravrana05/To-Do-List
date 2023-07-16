@@ -12,7 +12,7 @@ function handleSubmit(e){
 
 if(value === ''){
     toast({
-        title: "Please enter the text.",
+       title : "Please enter the text.",
         status: "warning",
         duration: 2000,
         isClosable: true,

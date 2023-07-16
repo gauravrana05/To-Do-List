@@ -24,7 +24,7 @@ function addTodo(newTodo) {
   setTodos([...todos, newTodo])
 }
 
-function editTodo(id, updatedTodo) {
+todo.id === id ? updatedTodo : todo
+  })function editTodo(id, updatedTodo) {
   const updatedItem = todos.map((todo) => {
-    return todo.id === id ? updatedTodo : todo
-  })
+    return 
