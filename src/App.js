@@ -38,7 +38,7 @@ function App() {
           setTasks={setTasks}
           item={{
             task: { title: "", description: "" },
-            priority: "",
+            priority: "low",
             points: 0,
             type: "notStarted",
           }}

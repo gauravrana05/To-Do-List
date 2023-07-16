@@ -39,8 +39,8 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
     setModalTitle("")
     setModalDescription("")
     setModalPoints(0)
-    setModalPriority("")
-    setModalStatus("")
+    setModalPriority("low")
+    setModalStatus("notStarted")
     setIsOpen(false)
   }
   function handleTitleInputChange(e) {
@@ -147,7 +147,6 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                   <FormLabel mb={0}fontSize='sm'> Status: </FormLabel>
                     <Select
                     border='solid 1px black'
-                      placeholder="Choose Status"
                       value={modalStatus}
                       onChange={handleStatusInputChange}
                     >
@@ -160,7 +159,6 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                   <FormLabel mb={0}fontSize='sm'> Priority: </FormLabel>
                   <Select
                   border='solid 1px black'
-                    placeholder="Priority"
                     value={modalPriority}
                     onChange={handlePriorityInputChange}
                   >
@@ -171,7 +169,6 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                   </FormControl>
                 <Flex m={0} align={"center"} flexDirection="column">
                   <FormControl
-                    isRequired
                     m={3}
                     display="flex"
                     alignItems="start"
