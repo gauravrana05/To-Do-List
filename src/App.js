@@ -1,4 +1,3 @@
-import { nanoid } from 'nanoid';
 import {
   HStack,
   VStack,
@@ -29,9 +28,9 @@ function App() {
 
   const [modalTitle, setModalTitle] = useState("")
   const [modalDescription, setModalDescription] = useState("")
-  const [modalPriority, setModalPriority] = useState({})
+  const [modalPriority, setModalPriority] = useState("")
   const [modalPoints, setModalPoints] = useState()
-  const [modalStatus, setModalStatus] = useState({})
+  const [modalStatus, setModalStatus] = useState("")
 
   const [isOpen, setIsOpen] = useState(false)
 
@@ -44,7 +43,6 @@ function App() {
   }
   function handleTitleInputChange(e) {
     setModalTitle(e.target.value)
-    console.log(modalTitle);
   }
   function handleDescriptionInputChange(e) {
     setModalDescription(e.target.value)
@@ -52,12 +50,10 @@ function App() {
 
   function handlePriorityInputChange(e) {
     setModalPriority( e.target.value )
-    console.log(modalPriority);
   }
 
   function handleStatusInputChange(e) {
     setModalStatus( e.target.value )
-    console.log(modalStatus)
   }
 
   function handlePointsInputChange(e) {
@@ -66,29 +62,32 @@ function App() {
   }
 
   function addTask(newTask) {
+    console.log(tasks);
+    console.log(newTask);
     setTasks([...tasks, newTask])
+    console.log(tasks);
   }
   function handleCreateSubmit(e) {
     e.preventDefault()
+    console.log(modalStatus);
     const task = {
       id : tasks.length + 1,
-      text : {
-        title: modalTitle,
-        description: modalDescription,
+      task : {
+        "title": modalTitle,
+        "description": modalDescription,
       },
-      points : modalPoints,
+      points : Number(modalPoints),
       type: modalStatus,
-      priority: modalPriority
+      priority: modalPriority,
     }
-
     console.log(task);
-    addTask(task)
+     addTask(task)
 
     setModalTitle("")
     setModalDescription("")
     setModalPoints(0)
-    setModalPriority({})
-    setModalStatus({})
+    setModalPriority("")
+    setModalStatus("")
     setIsOpen(false)
   }
 
