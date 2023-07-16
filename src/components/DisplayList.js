@@ -16,9 +16,9 @@ function DisplayList({ tasks, setTasks, category }) {
   const [cItem, setcItem] = useState(tasks[0])
 
   function Icon({ priority }) {
-    return priority === "Low" ? (
+    return priority === "low" ? (
       <ChevronDownIcon w={6} h={6} color="blue" mt={2} />
-    ) : priority === "Medium" ? (
+    ) : priority === "medium" ? (
       <ChevronDownIcon w={6} h={6} mt={2} />
     ) : (
       <ChevronUpIcon w={6} h={6} mt={2} color="green" />
