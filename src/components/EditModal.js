@@ -102,7 +102,7 @@ else if(operation ==='edit'){
         <ModalCloseButton />
         <form onSubmit={handleCreateSubmit}>
           <ModalBody>
-            <FormControl m={3}>
+            <FormControl m={3} isRequired>
               <FormLabel>Task Name: </FormLabel>
               <Input
                 value={modalTitle}
@@ -112,7 +112,7 @@ else if(operation ==='edit'){
                 onChange={handleTitleInputChange}
               />
             </FormControl>
-            <FormControl m={3}>
+            <FormControl m={3} isRequired>
               <FormLabel>Enter Description here: </FormLabel>
               <Textarea
                 value={modalDescription}
@@ -122,7 +122,7 @@ else if(operation ==='edit'){
                 onChange={handleDescriptionInputChange}
               />
             </FormControl>
-            <FormControl m={3} display="flex" alignItems="center">
+            <FormControl isRequired m={3} display="flex" alignItems="center">
               <FormLabel mb={0}>Story points: </FormLabel>
               <Input
                 width={20}

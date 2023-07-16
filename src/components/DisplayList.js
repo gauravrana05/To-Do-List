@@ -33,8 +33,8 @@ function DisplayList({ tasks, setTasks, category }) {
   function DisplayTask({ item }) {
     return (
       <HStack>
-        <Flex p={2} display="block">
-          <Box p={1} shadow="md" borderWidth="1px">
+        <Flex p={2}  display="block">
+          <Box p={1}  shadow="md" borderWidth="1px">
             <Heading fontSize="md">
               {item.task.title}
               <EditIcon float={"right"} onClick={() => handleEditClick({item})} />
@@ -48,7 +48,7 @@ function DisplayList({ tasks, setTasks, category }) {
                 operation='edit'
               />
             </Heading>
-            <Text fontSize="small" mt={2}>
+            <Text  overflow='clip' overflowWrap='anywhere' fontSize="small" mt={2}>
               {item.task.description}
             </Text>
             <Box p={1} display="flex" justifyContent="flex-end">
