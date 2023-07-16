@@ -13,86 +13,97 @@ import {
   FormControl,
   Select,
   Flex,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
-import { useState } from "react"
+import { useState } from "react";
 
-const EditModal = ({isOpen, setIsOpen, tasks, setTasks, item, operation}) => {
-  
-  const [modalTitle, setModalTitle] = useState(item.task.title)
-  const [modalDescription, setModalDescription] = useState(item.task.description)
-  const [modalPriority, setModalPriority] = useState(item.priority)
-  const [modalPoints, setModalPoints] = useState(item.points)
-  const [modalStatus, setModalStatus] = useState(item.type)
+const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
+  const [modalTitle, setModalTitle] = useState(item.task.title);
+  const [modalDescription, setModalDescription] = useState(
+    item.task.description
+  );
+  const [modalPriority, setModalPriority] = useState(item.priority);
+  const [modalPoints, setModalPoints] = useState(item.points);
+  const [modalStatus, setModalStatus] = useState(item.type);
+  const canSave = [
+    modalTitle,
+    modalDescription,
+    modalPriority,
+    modalPoints,
+    modalStatus,
+  ].every(Boolean);
 
   function onClose() {
-    setIsOpen(false)
+    setModalTitle("");
+    setModalDescription("");
+    setModalPoints(0);
+    setModalPriority("");
+    setModalStatus("");
+    setIsOpen(false);
   }
   function handleTitleInputChange(e) {
-    setModalTitle(e.target.value)
+    setModalTitle(e.target.value);
   }
   function handleDescriptionInputChange(e) {
-    setModalDescription(e.target.value)
+    setModalDescription(e.target.value);
   }
 
   function handlePriorityInputChange(e) {
-    setModalPriority(e.target.value)
+    setModalPriority(e.target.value);
   }
 
   function handleStatusInputChange(e) {
-    setModalStatus(e.target.value)
+    setModalStatus(e.target.value);
   }
 
   function handlePointsInputChange(e) {
-    setModalPoints(e.target.value)
+    setModalPoints(e.target.value);
   }
 
   function addTask(newTask) {
-    setTasks([...tasks, newTask])
+    setTasks([...tasks, newTask]);
   }
-  function editTask(item){
-
-    const updatedTask = tasks.map((task) => 
-    { return task.id === item.id ? item: task });
-    setTasks(updatedTask)
-    
+  function editTask(item) {
+    const updatedTask = tasks.map((task) => {
+      return task.id === item.id ? item : task;
+    });
+    setTasks(updatedTask);
   }
 
   function handleCreateSubmit(e) {
-    e.preventDefault()
-    console.log(modalStatus)
-    if(operation === 'create'){
-    const task = {
-      id: tasks.length + 1,
-      task: {
-        title: modalTitle,
-        description: modalDescription,
-      },
-      points: Number(modalPoints),
-      type: modalStatus,
-      priority: modalPriority,
+    e.preventDefault();
+    console.log(modalStatus);
+    if (operation === "create") {
+      const task = {
+        id: tasks.length + 1,
+        task: {
+          title: modalTitle,
+          description: modalDescription,
+        },
+        points: Number(modalPoints),
+        type: modalStatus,
+        priority: modalPriority,
+      };
+      console.log(task);
+      addTask(task);
+    } else if (operation === "edit") {
+      item.task.title = modalTitle;
+      item.task.description = modalDescription;
+      item.priority = modalPriority;
+      item.type = modalStatus;
+      item.points = modalPoints;
+
+      console.log(item);
+      console.log(tasks);
+      setTasks(tasks);
+      editTask(item);
     }
-    console.log(task)
-    addTask(task)
-}
-else if(operation ==='edit'){
-    item.task.title = modalTitle;
-    item.task.description = modalDescription;
-    item.priority = modalPriority;
-    item.type = modalStatus;
-    item.points = modalPoints;
-    
-    console.log(item);
-    console.log(tasks);
-    setTasks(tasks)
-    editTask(item);
-}
-    setModalTitle("")
-    setModalDescription("")
-    setModalPoints(0)
-    setModalPriority("")
-    setModalStatus("")
-    setIsOpen(false)
+    setModalTitle("");
+    setModalDescription("");
+    setModalPoints(0);
+    setModalPriority("");
+    setModalStatus("");
+    setIsOpen(false);
   }
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">
@@ -162,17 +173,27 @@ else if(operation ==='edit'){
             </FormControl>
           </ModalBody>
           <ModalFooter>
-            <Button colorScheme="telegram" mr={3} onClick={onClose}>
+            <Button
+              colorScheme="telegram"
+              mr={3}
+              variant="ghost"
+              onClick={onClose}
+            >
               Close
             </Button>
-            <Button type="submit" colorScheme="facebook" mr={3}>
+            <Button
+              isDisabled={!canSave}
+              type="submit"
+              colorScheme="facebook"
+              mr={3}
+            >
               Save
             </Button>
           </ModalFooter>
         </form>
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export default EditModal
+export default EditModal;
