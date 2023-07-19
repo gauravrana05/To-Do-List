@@ -17,19 +17,25 @@ import {
   VStack,
 } from "@chakra-ui/react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 const baseURL = "http://localhost:3000/api/v1/tasks/";
 
-const EditModal = ({ isOpen, setIsOpen, item }) => {
-  // const [tasks, setTasks] = useState(item);
-
+const EditModal = ({ isOpen, setIsOpen, item, setCreated }) => {
   const [modalTitle, setModalTitle] = useState(item.title);
   const [modalDescription, setModalDescription] = useState(item.description);
   const [modalPriority, setModalPriority] = useState(item.priority);
   const [modalPoints, setModalPoints] = useState(item.points);
   const [modalStatus, setModalStatus] = useState(item.type);
+
+  useEffect(() => {
+    setModalTitle(item.title);
+    setModalDescription(item.description);
+    setModalPriority(item.priority);
+    setModalStatus(item.type);
+    setModalPoints(item.points);
+  }, [isOpen]);
 
   const canSave = [
     modalTitle,
@@ -48,7 +54,6 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
     setIsOpen(false);
   }
   function handleTitleInputChange(e) {
-    console.log(e.target.value);
     setModalTitle(e.target.value);
   }
   function handleDescriptionInputChange(e) {
@@ -67,24 +72,24 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
     setModalPoints(e.target.value);
   }
 
-  function handleCreateSubmit(e) {
+  const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    console.log(modalStatus);
     item.title = modalTitle;
     item.description = modalDescription;
     item.priority = modalPriority;
     item.type = modalStatus;
     item.points = modalPoints;
 
-    axios.patch(`${baseURL}${item._id}`, item).then((response) => {});
+    await axios.patch(`${baseURL}${item._id}`, item);
 
     setModalTitle("");
     setModalDescription("");
     setModalPoints(0);
     setModalPriority("");
     setModalStatus("");
+    setCreated((prev) => !prev);
     setIsOpen(false);
-  }
+  };
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">
       <ModalOverlay />
@@ -183,7 +188,7 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
               colorScheme="telegram"
               mr={3}
               variant="ghost"
-              onClick={() => onClose}
+              onClick={onClose}
             >
               Close
             </Button>

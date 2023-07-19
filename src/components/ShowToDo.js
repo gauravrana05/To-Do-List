@@ -1,10 +1,11 @@
 import { HStack, Badge } from "@chakra-ui/react";
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DisplayList from "./DisplayList";
 const baseURL = "http://localhost:3000/api/v1/tasks/";
 
-export default function ShowToDo({ tasks, setTasks, created }) {
+export default function ShowToDo({ created, setCreated }) {
+  const [tasks, setTasks] = useState("");
   useEffect(() => {
     const Tasks = async () => {
       try {
@@ -31,9 +32,24 @@ export default function ShowToDo({ tasks, setTasks, created }) {
     </HStack>
   ) : (
     <HStack justifyContent="space-evenly" gap={7} width="100%">
-      <DisplayList tasks={tasks} setTasks={setTasks} category="notStarted" />
-      <DisplayList tasks={tasks} setTasks={setTasks} category="started" />
-      <DisplayList tasks={tasks} setTasks={setTasks} category="completed" />
+      <DisplayList
+        tasks={tasks}
+        setTasks={setTasks}
+        setCreated={setCreated}
+        category="notStarted"
+      />
+      <DisplayList
+        tasks={tasks}
+        setTasks={setTasks}
+        setCreated={setCreated}
+        category="started"
+      />
+      <DisplayList
+        tasks={tasks}
+        setTasks={setTasks}
+        setCreated={setCreated}
+        category="completed"
+      />
     </HStack>
   );
 }

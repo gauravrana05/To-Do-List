@@ -3,8 +3,7 @@ import { ChevronDownIcon, ChevronUpIcon, EditIcon } from "@chakra-ui/icons";
 import EditModal from "./EditModal";
 import { useState } from "react";
 
-function DisplayTask({ item }) {
-  const [citem, setCitem] = useState(item);
+function DisplayTask({ item, setCreated }) {
   const [isOpen, setIsOpen] = useState(false);
 
   function Icon({ priority }) {
@@ -17,16 +16,12 @@ function DisplayTask({ item }) {
     );
   }
 
-  function handleEditClick({ item }) {
-    console.log("From Display task1", citem);
-    setCitem(item);
-    console.log(citem);
+  function handleEditClick() {
     setIsOpen(true);
-    console.log("From Display task2", item);
   }
   return (
     // <HStack>
-    <Flex p={2} display="block">
+    <Flex p={2} display="block" styles={{ width: "100%" }}>
       <Box p={1} shadow="md" borderWidth="1px">
         <Heading fontSize="md">
           {item.title}
@@ -34,12 +29,17 @@ function DisplayTask({ item }) {
             colorScheme="whiteAlpha"
             textColor={"black"}
             float={"right"}
-            onClick={() => handleEditClick({ item })}
+            onClick={() => handleEditClick()}
           >
             <EditIcon />
           </Button>
 
-          <EditModal isOpen={isOpen} setIsOpen={setIsOpen} item={citem} />
+          <EditModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            item={item}
+            setCreated={setCreated}
+          />
         </Heading>
         <Text overflow="clip" overflowWrap="anywhere" fontSize="small" mt={2}>
           {item.description}

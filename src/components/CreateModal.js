@@ -68,7 +68,6 @@ const CreateModal = ({ isOpen, setIsOpen, item, operation, setCreated }) => {
 
   const handleCreateSubmit = async (e) => {
     e.preventDefault();
-    console.log(modalStatus);
     if (operation === "create") {
       const task = {
         title: modalTitle,

@@ -8,9 +8,7 @@ import CreateModal from "./components/CreateModal";
 // const baseURL = "http://localhost:3000/api/v1/tasks/";
 
 function App() {
-  console.log("App still re rendering");
   const [isOpen, setIsOpen] = useState(false);
-  const [tasks, setTasks] = useState("");
   const [created, setCreated] = useState(false);
   function handleCreateClick() {
     setIsOpen(true);
@@ -49,7 +47,7 @@ function App() {
         operation="create"
         setCreated={setCreated}
       />
-      <ShowToDo tasks={tasks} created={created} setTasks={setTasks} />
+      <ShowToDo created={created} setCreated={setCreated} />
 
       <HStack padding={4} justifyContent="center" width="100%">
         <Heading fontSize="md">@devtools2023</Heading>

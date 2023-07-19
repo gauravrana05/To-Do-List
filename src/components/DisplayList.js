@@ -1,7 +1,7 @@
 import { VStack, Badge, Heading } from "@chakra-ui/react";
 import DisplayTask from "./DisplayTask";
 
-function DisplayList({ tasks, category }) {
+function DisplayList({ tasks, category, setCreated }) {
   let categoryTasks = tasks.filter(function check(task) {
     return task.type === category;
   });
@@ -37,7 +37,7 @@ function DisplayList({ tasks, category }) {
 
       <VStack align="flex-start">
         {categoryTasks.map((item, index) => (
-          <DisplayTask key={index} item={item} />
+          <DisplayTask key={index} item={item} setCreated={setCreated} />
         ))}
       </VStack>
     </VStack>
