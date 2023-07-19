@@ -1,22 +1,7 @@
-import {
-  VStack,
-  Text,
-  Flex,
-  Badge,
-  Heading,
-  Box,
-  Button,
-} from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronUpIcon, EditIcon } from "@chakra-ui/icons";
-import EditModal from "./EditModal";
-import { useState } from "react";
+import { VStack, Badge, Heading } from "@chakra-ui/react";
 import DisplayTask from "./DisplayTask";
 
-function DisplayList({tasks, category }) {
-  
-  const [isOpen, setIsOpen] = useState(false);
-
- 
+function DisplayList({ tasks, category }) {
   let categoryTasks = tasks.filter(function check(task) {
     return task.type === category;
   });
@@ -51,8 +36,8 @@ function DisplayList({tasks, category }) {
       </Heading>
 
       <VStack align="flex-start">
-        {categoryTasks.map((item) => (
-          <DisplayTask isOpen={isOpen} setIsOpen={setIsOpen} item={item} />
+        {categoryTasks.map((item, index) => (
+          <DisplayTask key={index} item={item} />
         ))}
       </VStack>
     </VStack>

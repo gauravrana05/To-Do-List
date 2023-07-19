@@ -15,140 +15,145 @@ import {
   Flex,
   HStack,
   VStack,
-} from "@chakra-ui/react"
+} from "@chakra-ui/react";
 
-import { useState } from "react"
+import { useState } from "react";
 import axios from "axios";
 
 const baseURL = "http://localhost:3000/api/v1/tasks/";
 
 const EditModal = ({ isOpen, setIsOpen, item }) => {
- 
-  const [tasks, setTasks] = useState(item)
-  console.log(tasks);
-  
-  const [modalTitle, setModalTitle] = useState(item.title)
-  const [modalDescription, setModalDescription] = useState(item.description)
-  const [modalPriority, setModalPriority] = useState(item.priority)
-  const [modalPoints, setModalPoints] = useState(item.points)
-  const [modalStatus, setModalStatus] = useState(item.type)
-  
+  // const [tasks, setTasks] = useState(item);
+
+  const [modalTitle, setModalTitle] = useState(item.title);
+  const [modalDescription, setModalDescription] = useState(item.description);
+  const [modalPriority, setModalPriority] = useState(item.priority);
+  const [modalPoints, setModalPoints] = useState(item.points);
+  const [modalStatus, setModalStatus] = useState(item.type);
+
   const canSave = [
     modalTitle,
     modalDescription,
     modalPriority,
     modalPoints,
     modalStatus,
-  ].every(Boolean)
+  ].every(Boolean);
 
   function onClose() {
-    setModalTitle("")
-    setModalDescription("")
-    setModalPoints(0)
-    setModalPriority("low")
-    setModalStatus("notStarted")
-    setIsOpen(false)
+    setModalTitle("");
+    setModalDescription("");
+    setModalPoints(0);
+    setModalPriority("low");
+    setModalStatus("notStarted");
+    setIsOpen(false);
   }
   function handleTitleInputChange(e) {
-    setModalTitle(e.target.value)
+    console.log(e.target.value);
+    setModalTitle(e.target.value);
   }
   function handleDescriptionInputChange(e) {
-    setModalDescription(e.target.value)
+    setModalDescription(e.target.value);
   }
 
   function handlePriorityInputChange(e) {
-    setModalPriority(e.target.value)
+    setModalPriority(e.target.value);
   }
 
   function handleStatusInputChange(e) {
-    setModalStatus(e.target.value)
+    setModalStatus(e.target.value);
   }
 
   function handlePointsInputChange(e) {
-    setModalPoints(e.target.value)
+    setModalPoints(e.target.value);
   }
 
   function handleCreateSubmit(e) {
-    e.preventDefault()
-    console.log(modalStatus)
-      item.title = modalTitle
-      item.description = modalDescription
-      item.priority = modalPriority
-      item.type = modalStatus
-      item.points = modalPoints
+    e.preventDefault();
+    console.log(modalStatus);
+    item.title = modalTitle;
+    item.description = modalDescription;
+    item.priority = modalPriority;
+    item.type = modalStatus;
+    item.points = modalPoints;
 
-      axios
-      .patch(`${baseURL}${item._id}`, item)
-      .then((response) => {
-      });
-      
-    setModalTitle("")
-    setModalDescription("")
-    setModalPoints(0)
-    setModalPriority("")
-    setModalStatus("")
-    setIsOpen(false)
+    axios.patch(`${baseURL}${item._id}`, item).then((response) => {});
+
+    setModalTitle("");
+    setModalDescription("");
+    setModalPoints(0);
+    setModalPriority("");
+    setModalStatus("");
+    setIsOpen(false);
   }
   return (
-    <Modal isOpen={isOpen} onClose={()=> onClose} size="3xl">
+    <Modal isOpen={isOpen} onClose={onClose} size="3xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontSize="4xl">Task Details</ModalHeader>
         <ModalCloseButton />
-        <form onSubmit={ ()=> handleCreateSubmit}>
+        <form onSubmit={handleCreateSubmit}>
           <ModalBody>
             <HStack justifyContent={"space-evenly"}>
               <VStack width="60%">
-                <FormControl m={3} fontSize='sm' >
-                  <FormLabel mb={0} fontSize={"small"}>Task Name: </FormLabel>
+                <FormControl m={3} fontSize="sm">
+                  <FormLabel mb={0} fontSize={"small"}>
+                    Task Name:{" "}
+                  </FormLabel>
                   <Input
-                    border='solid 1px black'
+                    border="solid 1px black"
                     value={modalTitle}
                     variant="outline"
                     type="text"
                     placeholder="Enter Task..."
-                    onChange={ ()=> handleTitleInputChange}
+                    onChange={handleTitleInputChange}
                   />
                 </FormControl>
-                <FormControl m={3} >
-                  <FormLabel mb={0} fontSize={"small"}>Description </FormLabel>
+                <FormControl m={3}>
+                  <FormLabel mb={0} fontSize={"small"}>
+                    Description{" "}
+                  </FormLabel>
                   <Textarea
-                    border='solid 1px black'
+                    border="solid 1px black"
                     h="200px"
                     value={modalDescription}
                     variant="outline"
                     type="text"
                     placeholder="Description"
-                    onChange={()=> handleDescriptionInputChange}
+                    onChange={handleDescriptionInputChange}
                   />
                 </FormControl>
               </VStack>
-              <VStack w="20%" alignItems='start' justifyContent='start'>
-                  <FormControl mb={10}
-                  > 
-                  <FormLabel mb={0}fontSize='sm'> Status: </FormLabel>
-                    <Select
-                    border='solid 1px black'
-                      value={modalStatus}
-                      onChange={()=> handleStatusInputChange}
-                    >
-                      <option value="started">Started</option>
-                      <option value="notStarted">Not Started</option>
-                      <option value="completed">Completed</option>
-                    </Select>
-                  </FormControl>
-                  <FormControl mb={9} >
-                  <FormLabel mb={0}fontSize='sm'> Priority: </FormLabel>
+              <VStack w="20%" alignItems="start" justifyContent="start">
+                <FormControl mb={10}>
+                  <FormLabel mb={0} fontSize="sm">
+                    {" "}
+                    Status:{" "}
+                  </FormLabel>
                   <Select
-                  border='solid 1px black'
+                    border="solid 1px black"
+                    value={modalStatus}
+                    onChange={handleStatusInputChange}
+                  >
+                    <option value="started">Started</option>
+                    <option value="notStarted">Not Started</option>
+                    <option value="completed">Completed</option>
+                  </Select>
+                </FormControl>
+                <FormControl mb={9}>
+                  <FormLabel mb={0} fontSize="sm">
+                    {" "}
+                    Priority:{" "}
+                  </FormLabel>
+                  <Select
+                    border="solid 1px black"
                     value={modalPriority}
-                    onChange={()=> handlePriorityInputChange}
+                    onChange={handlePriorityInputChange}
                   >
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
                   </Select>
-                  </FormControl>
+                </FormControl>
                 <Flex m={0} align={"center"} flexDirection="column">
                   <FormControl
                     m={3}
@@ -156,14 +161,17 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
                     alignItems="start"
                     flexDirection="column"
                   >
-                    <FormLabel mb={0} fontSize='sm'> Story points: </FormLabel>
+                    <FormLabel mb={0} fontSize="sm">
+                      {" "}
+                      Story points:{" "}
+                    </FormLabel>
                     <Input
-                      border='solid 1px black'
+                      border="solid 1px black"
                       value={modalPoints}
                       variant="outline"
                       type="number"
                       placeholder="Points"
-                      onChange={()=> handlePointsInputChange}
+                      onChange={handlePointsInputChange}
                     />
                   </FormControl>
                 </Flex>
@@ -175,7 +183,7 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
               colorScheme="telegram"
               mr={3}
               variant="ghost"
-              onClick={()=> onClose}
+              onClick={() => onClose}
             >
               Close
             </Button>
@@ -191,7 +199,7 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
         </form>
       </ModalContent>
     </Modal>
-  )
-}
+  );
+};
 
-export default EditModal
+export default EditModal;

@@ -1,19 +1,11 @@
-import {
-  VStack,
-  Text,
-  Flex,
-  Badge,
-  Heading,
-  Box,
-  Button,
-} from "@chakra-ui/react"
-import { ChevronDownIcon, ChevronUpIcon, EditIcon } from "@chakra-ui/icons"
-import EditModal from "./EditModal"
-import { useState } from "react"
+import { Text, Flex, Heading, Box, Button } from "@chakra-ui/react";
+import { ChevronDownIcon, ChevronUpIcon, EditIcon } from "@chakra-ui/icons";
+import EditModal from "./EditModal";
+import { useState } from "react";
 
-function DisplayTask({ isOpen, setIsOpen, item }) {
-    
-    const [citem, setCitem] = useState(item);
+function DisplayTask({ item }) {
+  const [citem, setCitem] = useState(item);
+  const [isOpen, setIsOpen] = useState(false);
 
   function Icon({ priority }) {
     return priority === "low" ? (
@@ -22,15 +14,15 @@ function DisplayTask({ isOpen, setIsOpen, item }) {
       <ChevronDownIcon w={6} h={6} color="blue" mt={2} />
     ) : (
       <ChevronUpIcon w={6} h={6} mt={2} color="red" />
-    )
+    );
   }
 
   function handleEditClick({ item }) {
-      console.log(citem);
+    console.log("From Display task1", citem);
     setCitem(item);
     console.log(citem);
-      setIsOpen(true)
-      console.log(item);
+    setIsOpen(true);
+    console.log("From Display task2", item);
   }
   return (
     // <HStack>
@@ -62,6 +54,6 @@ function DisplayTask({ isOpen, setIsOpen, item }) {
       </Box>
     </Flex>
     // </HStack>
-  )
+  );
 }
-export default DisplayTask
+export default DisplayTask;
