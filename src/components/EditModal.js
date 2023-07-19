@@ -18,15 +18,21 @@ import {
 } from "@chakra-ui/react"
 
 import { useState } from "react"
+import axios from "axios";
 
-const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
-  const [modalTitle, setModalTitle] = useState(item.task.title)
-  const [modalDescription, setModalDescription] = useState(
-    item.task.description
-  )
+const baseURL = "http://localhost:3000/api/v1/tasks/";
+
+const EditModal = ({ isOpen, setIsOpen, item }) => {
+ 
+  const [tasks, setTasks] = useState(item)
+  console.log(tasks);
+  
+  const [modalTitle, setModalTitle] = useState(item.title)
+  const [modalDescription, setModalDescription] = useState(item.description)
   const [modalPriority, setModalPriority] = useState(item.priority)
   const [modalPoints, setModalPoints] = useState(item.points)
   const [modalStatus, setModalStatus] = useState(item.type)
+  
   const canSave = [
     modalTitle,
     modalDescription,
@@ -62,44 +68,20 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
     setModalPoints(e.target.value)
   }
 
-  function addTask(newTask) {
-    setTasks([...tasks, newTask])
-  }
-  function editTask(item) {
-    const updatedTask = tasks.map((task) => {
-      return task.id === item.id ? item : task
-    })
-    setTasks(updatedTask)
-  }
-
   function handleCreateSubmit(e) {
     e.preventDefault()
     console.log(modalStatus)
-    if (operation === "create") {
-      const task = {
-        id: tasks.length + 1,
-        task: {
-          title: modalTitle,
-          description: modalDescription,
-        },
-        points: Number(modalPoints),
-        type: modalStatus,
-        priority: modalPriority,
-      }
-      console.log(task)
-      addTask(task)
-    } else if (operation === "edit") {
-      item.task.title = modalTitle
-      item.task.description = modalDescription
+      item.title = modalTitle
+      item.description = modalDescription
       item.priority = modalPriority
       item.type = modalStatus
       item.points = modalPoints
 
-      console.log(item)
-      console.log(tasks)
-      setTasks(tasks)
-      editTask(item)
-    }
+      axios
+      .patch(`${baseURL}${item._id}`, item)
+      .then((response) => {
+      });
+      
     setModalTitle("")
     setModalDescription("")
     setModalPoints(0)
@@ -108,12 +90,12 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
     setIsOpen(false)
   }
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+    <Modal isOpen={isOpen} onClose={()=> onClose} size="3xl">
       <ModalOverlay />
       <ModalContent>
         <ModalHeader fontSize="4xl">Task Details</ModalHeader>
         <ModalCloseButton />
-        <form onSubmit={handleCreateSubmit}>
+        <form onSubmit={ ()=> handleCreateSubmit}>
           <ModalBody>
             <HStack justifyContent={"space-evenly"}>
               <VStack width="60%">
@@ -125,7 +107,7 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                     variant="outline"
                     type="text"
                     placeholder="Enter Task..."
-                    onChange={handleTitleInputChange}
+                    onChange={ ()=> handleTitleInputChange}
                   />
                 </FormControl>
                 <FormControl m={3} >
@@ -137,7 +119,7 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                     variant="outline"
                     type="text"
                     placeholder="Description"
-                    onChange={handleDescriptionInputChange}
+                    onChange={()=> handleDescriptionInputChange}
                   />
                 </FormControl>
               </VStack>
@@ -148,7 +130,7 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                     <Select
                     border='solid 1px black'
                       value={modalStatus}
-                      onChange={handleStatusInputChange}
+                      onChange={()=> handleStatusInputChange}
                     >
                       <option value="started">Started</option>
                       <option value="notStarted">Not Started</option>
@@ -160,7 +142,7 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                   <Select
                   border='solid 1px black'
                     value={modalPriority}
-                    onChange={handlePriorityInputChange}
+                    onChange={()=> handlePriorityInputChange}
                   >
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
@@ -181,7 +163,7 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
                       variant="outline"
                       type="number"
                       placeholder="Points"
-                      onChange={handlePointsInputChange}
+                      onChange={()=> handlePointsInputChange}
                     />
                   </FormControl>
                 </Flex>
@@ -193,7 +175,7 @@ const EditModal = ({ isOpen, setIsOpen, tasks, setTasks, item, operation }) => {
               colorScheme="telegram"
               mr={3}
               variant="ghost"
-              onClick={onClose}
+              onClick={()=> onClose}
             >
               Close
             </Button>

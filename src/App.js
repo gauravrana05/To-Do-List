@@ -1,14 +1,18 @@
 import { HStack, VStack, Text, Heading, Button } from "@chakra-ui/react";
 import "./css/App.css";
-import { useState } from "react";
-import taskList from "./TaskList.json";
-import DisplayList from "./components/DisplayList";
-import EditModal from "./components/EditModal";
+import {  useState } from "react";
+
+
+
+import ShowToDo from "./components/ShowToDo";
+import CreateModal from "./components/CreateModal";
+
+const baseURL = "http://localhost:3000/api/v1/tasks/";
 
 function App() {
-  const [tasks, setTasks] = useState(taskList);
-  const [isOpen, setIsOpen] = useState(false);
 
+  const [isOpen, setIsOpen] = useState(false);
+  const [tasks, setTasks] = useState("")
   function handleCreateClick() {
     setIsOpen(true);
   }
@@ -22,6 +26,7 @@ function App() {
         <Text fontSize="medium" ml={41}>
           Buzz Aldrin’s tasks
         </Text>
+
         <Button
           onClick={() => handleCreateClick()}
           fontSize="md"
@@ -31,26 +36,20 @@ function App() {
         >
           Create
         </Button>
-        <EditModal
-          isOpen={isOpen}
-          setIsOpen={setIsOpen}
-          tasks={tasks}
-          setTasks={setTasks}
-          item={{
-            task: { title: "", description: "" },
-            priority: "low",
-            points: 0,
-            type: "notStarted",
-          }}
-          operation="create"
-        />
       </HStack>
-
-      <HStack justifyContent="space-evenly" gap={7} width="100%">
-        <DisplayList tasks={tasks} setTasks={setTasks} category="notStarted" />
-        <DisplayList tasks={tasks} setTasks={setTasks} category="started" />
-        <DisplayList tasks={tasks} setTasks={setTasks} category="completed" />
-      </HStack>
+        <CreateModal
+            isOpen={isOpen}
+            setIsOpen={setIsOpen}
+            item={{
+              title: "",
+              description: "",
+              priority: "low",
+              points: 0,
+              type: "notStarted",
+            }}
+            operation="create"
+          />
+      <ShowToDo tasks={tasks} setTasks= {setTasks} />
 
       <HStack padding={4} justifyContent="center" width="100%">
         <Heading fontSize="md">@devtools2023</Heading>

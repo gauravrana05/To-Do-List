@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Clean office space",
+    "description": "I want to clean my office table, mop the floor, and vacuum the chair. ",
+    "points": 3,
+    "type": "notStarted",
+    "priority": "high"
+  },
+  {
+    "title": "Build a space ship ",
+    "description": "I want to build a space so that I can fly to the moon & back",
+    "points": 3,
+    "type": "started",
+    "priority": "low"
+  },
+  {
+    "title": "Design a spacesuit",
+    "description": "I want to design a spacesuit, construct one, and test it. ",
+    "points": 3,
+    "type": "completed",
+    "priority": "medium"
+  },
+  {
+    "title": "Wear a spacesuit",
+    "description": "I want to design a spacesuit, construct one, and test it. ",
+    "points": 3,
+    "type": "completed",
+    "priority": "medium"
+  }
+]
