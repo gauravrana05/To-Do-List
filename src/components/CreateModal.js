@@ -15,132 +15,113 @@ import {
   Flex,
   HStack,
   VStack,
-} from "@chakra-ui/react";
+} from "@chakra-ui/react"
 
-import { useState } from "react";
-import axios from "axios";
+import { useState } from "react"
+import axios from "axios"
 
-const baseURL = "http://localhost:3000/api/v1/tasks/";
+const baseURL = "http://localhost:3000/api/v1/tasks/"
 
-const CreateModal = ({ isOpen, setIsOpen, item, operation, setCreated }) => {
-  const [tasks, setTasks] = useState(item);
+const CreateModal = ({ isOpen, setIsOpen }) => {
 
-  const [modalTitle, setModalTitle] = useState(item.title);
-  const [modalDescription, setModalDescription] = useState(item.description);
-  const [modalPriority, setModalPriority] = useState(item.priority);
-  const [modalPoints, setModalPoints] = useState(item.points);
-  const [modalStatus, setModalStatus] = useState(item.type);
+  
+  const [tasks, setTasks] =  useState({
+                                  title: "",
+                                  description: "",
+                                  priority: "low",
+                                  points: 0,
+                                  type: "notStarted",
+                                 })
 
-  const canSave = [
-    modalTitle,
-    modalDescription,
-    modalPriority,
-    modalPoints,
-    modalStatus,
-  ].every(Boolean);
 
   function onClose() {
-    setModalTitle("");
-    setModalDescription("");
-    setModalPoints(0);
-    setModalPriority("low");
-    setModalStatus("notStarted");
-    setIsOpen(false);
-  }
-  function handleTitleInputChange(e) {
-    setModalTitle(e.target.value);
-  }
-  function handleDescriptionInputChange(e) {
-    setModalDescription(e.target.value);
+    setIsOpen(false)
   }
 
-  function handlePriorityInputChange(e) {
-    setModalPriority(e.target.value);
-  }
 
-  function handleStatusInputChange(e) {
-    setModalStatus(e.target.value);
-  }
-
-  function handlePointsInputChange(e) {
-    setModalPoints(e.target.value);
-  }
 
   const handleCreateSubmit = async (e) => {
-    e.preventDefault();
-    if (operation === "create") {
-      const task = {
-        title: modalTitle,
-        description: modalDescription,
-        points: Number(modalPoints),
-        type: modalStatus,
-        priority: modalPriority,
-      };
+    
+    e.preventDefault()
 
-      await axios.post(baseURL, task).then((res) => setTasks(tasks));
-      setCreated(true);
-    }
-    setModalTitle("");
-    setModalDescription("");
-    setModalPoints(0);
-    setModalPriority("");
-    setModalStatus("");
-    setIsOpen(false);
-  };
+      const task = {
+        title: document.querySelector('.title').value,
+        description: document.querySelector('.description').value,
+        points: Number(document.querySelector('.points').value),
+        type:  document.querySelector('.status').value,
+        priority:  document.querySelector('.priority').value,
+      }
+      
+
+      await axios.post(baseURL, task).then((res) => setTasks(tasks))
+
+    setIsOpen(false)
+  }
   return (
+
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">
+      
       <ModalOverlay />
+      
       <ModalContent>
         <ModalHeader fontSize="4xl">Task Details</ModalHeader>
         <ModalCloseButton />
+        
         <form onSubmit={handleCreateSubmit}>
+          
           <ModalBody>
             <HStack justifyContent={"space-evenly"}>
+              
               <VStack width="60%">
+                
                 <FormControl m={3} fontSize="sm">
                   <FormLabel mb={0} fontSize={"small"}>
                     Task Name:{" "}
                   </FormLabel>
-                  <Input
+                  <Input 
+                    isRequired
+                    className="title"
                     border="solid 1px black"
-                    value={modalTitle}
                     variant="outline"
                     type="text"
                     placeholder="Enter Task..."
-                    onChange={handleTitleInputChange}
                   />
                 </FormControl>
+
                 <FormControl m={3}>
                   <FormLabel mb={0} fontSize={"small"}>
                     Description{" "}
                   </FormLabel>
                   <Textarea
+                    isRequired
+                    className="description"
                     border="solid 1px black"
                     h="200px"
-                    value={modalDescription}
                     variant="outline"
                     type="text"
                     placeholder="Description"
-                    onChange={handleDescriptionInputChange}
                   />
                 </FormControl>
+
               </VStack>
+
               <VStack w="20%" alignItems="start" justifyContent="start">
+               
                 <FormControl mb={10}>
                   <FormLabel mb={0} fontSize="sm">
                     {" "}
                     Status:{" "}
                   </FormLabel>
                   <Select
+                    className="status"
                     border="solid 1px black"
-                    value={modalStatus}
-                    onChange={handleStatusInputChange}
                   >
                     <option value="started">Started</option>
                     <option value="notStarted">Not Started</option>
                     <option value="completed">Completed</option>
                   </Select>
                 </FormControl>
+
                 <FormControl mb={9}>
                   <FormLabel mb={0} fontSize="sm">
                     {" "}
@@ -148,15 +129,16 @@ const CreateModal = ({ isOpen, setIsOpen, item, operation, setCreated }) => {
                   </FormLabel>
                   <Select
                     border="solid 1px black"
-                    value={modalPriority}
-                    onChange={handlePriorityInputChange}
+                    className="priority"
                   >
                     <option value="high">High</option>
                     <option value="medium">Medium</option>
                     <option value="low">Low</option>
                   </Select>
                 </FormControl>
+
                 <Flex m={0} align={"center"} flexDirection="column">
+                  
                   <FormControl
                     m={3}
                     display="flex"
@@ -169,17 +151,22 @@ const CreateModal = ({ isOpen, setIsOpen, item, operation, setCreated }) => {
                     </FormLabel>
                     <Input
                       border="solid 1px black"
-                      value={modalPoints}
+                      isRequired
+                      className="points"
                       variant="outline"
                       type="number"
                       placeholder="Points"
-                      onChange={handlePointsInputChange}
                     />
                   </FormControl>
+
                 </Flex>
+
               </VStack>
+
             </HStack>
+
           </ModalBody>
+
           <ModalFooter>
             <Button
               colorScheme="telegram"
@@ -190,7 +177,6 @@ const CreateModal = ({ isOpen, setIsOpen, item, operation, setCreated }) => {
               Close
             </Button>
             <Button
-              isDisabled={!canSave}
               type="submit"
               colorScheme="facebook"
               mr={3}
@@ -201,7 +187,7 @@ const CreateModal = ({ isOpen, setIsOpen, item, operation, setCreated }) => {
         </form>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default CreateModal;
+export default CreateModal

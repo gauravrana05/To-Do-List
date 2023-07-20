@@ -1,41 +1,18 @@
-import {
-  Button,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  Input,
-  Modal,
-  ModalFooter,
-  Textarea,
-  FormLabel,
-  FormControl,
-  Select,
-  Flex,
-  HStack,
-  VStack,
-} from "@chakra-ui/react";
+import { Button,ModalOverlay,ModalContent,ModalHeader,ModalCloseButton,ModalBody,Input,Modal,ModalFooter,Textarea,FormLabel,FormControl,Select,Flex,HStack,VStack} from "@chakra-ui/react"
 
-import { useEffect, useState } from "react";
-import axios from "axios";
+import { useState } from "react"
+import axios from "axios"
 
-const baseURL = "http://localhost:3000/api/v1/tasks/";
+const baseURL = "http://localhost:3000/api/v1/tasks/"
 
-const EditModal = ({ isOpen, setIsOpen, item, setCreated }) => {
-  const [modalTitle, setModalTitle] = useState(item.title);
-  const [modalDescription, setModalDescription] = useState(item.description);
-  const [modalPriority, setModalPriority] = useState(item.priority);
-  const [modalPoints, setModalPoints] = useState(item.points);
-  const [modalStatus, setModalStatus] = useState(item.type);
 
-  useEffect(() => {
-    setModalTitle(item.title);
-    setModalDescription(item.description);
-    setModalPriority(item.priority);
-    setModalStatus(item.type);
-    setModalPoints(item.points);
-  }, [isOpen]);
+const EditModal = ({ isOpen, setIsOpen, item }) => {
+
+  const [modalTitle, setModalTitle] = useState(item.title)
+  const [modalDescription, setModalDescription] = useState(item.description)
+  const [modalPriority, setModalPriority] = useState(item.priority)
+  const [modalPoints, setModalPoints] = useState(item.points)
+  const [modalStatus, setModalStatus] = useState(item.type)
 
   const canSave = [
     modalTitle,
@@ -43,53 +20,42 @@ const EditModal = ({ isOpen, setIsOpen, item, setCreated }) => {
     modalPriority,
     modalPoints,
     modalStatus,
-  ].every(Boolean);
+  ].every(Boolean)
 
   function onClose() {
-    setModalTitle("");
-    setModalDescription("");
-    setModalPoints(0);
-    setModalPriority("low");
-    setModalStatus("notStarted");
-    setIsOpen(false);
+    setIsOpen(false)
   }
+
   function handleTitleInputChange(e) {
-    setModalTitle(e.target.value);
+    setModalTitle(e.target.value)
   }
   function handleDescriptionInputChange(e) {
-    setModalDescription(e.target.value);
+    setModalDescription(e.target.value)
   }
 
   function handlePriorityInputChange(e) {
-    setModalPriority(e.target.value);
+    setModalPriority(e.target.value)
   }
 
   function handleStatusInputChange(e) {
-    setModalStatus(e.target.value);
+    setModalStatus(e.target.value)
   }
 
   function handlePointsInputChange(e) {
-    setModalPoints(e.target.value);
+    setModalPoints(e.target.value)
   }
 
   const handleCreateSubmit = async (e) => {
-    e.preventDefault();
-    item.title = modalTitle;
-    item.description = modalDescription;
-    item.priority = modalPriority;
-    item.type = modalStatus;
-    item.points = modalPoints;
+    e.preventDefault()
+    item.title = modalTitle
+    item.description = modalDescription
+    item.priority = modalPriority
+    item.type = modalStatus
+    item.points = modalPoints
 
-    await axios.patch(`${baseURL}${item._id}`, item);
-
-    setModalTitle("");
-    setModalDescription("");
-    setModalPoints(0);
-    setModalPriority("");
-    setModalStatus("");
-    setCreated((prev) => !prev);
-    setIsOpen(false);
-  };
+    await axios.patch(`${baseURL}${item._id}`, item)
+    setIsOpen(false)
+  }
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="3xl">
       <ModalOverlay />
@@ -204,7 +170,7 @@ const EditModal = ({ isOpen, setIsOpen, item, setCreated }) => {
         </form>
       </ModalContent>
     </Modal>
-  );
-};
+  )
+}
 
-export default EditModal;
+export default EditModal

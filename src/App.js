@@ -5,11 +5,10 @@ import { useState } from "react";
 import ShowToDo from "./components/ShowToDo";
 import CreateModal from "./components/CreateModal";
 
-// const baseURL = "http://localhost:3000/api/v1/tasks/";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
-  const [created, setCreated] = useState(false);
+
   function handleCreateClick() {
     setIsOpen(true);
   }
@@ -37,17 +36,8 @@ function App() {
       <CreateModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        item={{
-          title: "",
-          description: "",
-          priority: "low",
-          points: 0,
-          type: "notStarted",
-        }}
-        operation="create"
-        setCreated={setCreated}
       />
-      <ShowToDo created={created} setCreated={setCreated} />
+      <ShowToDo setIsOpen = {setIsOpen}/>
 
       <HStack padding={4} justifyContent="center" width="100%">
         <Heading fontSize="md">@devtools2023</Heading>
