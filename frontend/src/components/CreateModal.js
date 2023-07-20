@@ -20,7 +20,7 @@ import {
 import { useState } from "react"
 import axios from "axios"
 
-const baseURL = "http://localhost:3000/api/v1/tasks/"
+const baseURL = "https://todo-app-3cwo.onrender.com/api/v1/tasks/"
 
 const CreateModal = ({ isOpen, setIsOpen, setCreated }) => {
 
