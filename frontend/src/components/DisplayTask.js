@@ -5,17 +5,18 @@ import { EditIcon } from "@chakra-ui/icons";
 import Icon  from "../static/Icon";
 
 
-function DisplayTask({  item }) {
+function DisplayTask({ setCreated, item }) { 
   
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false)
   
   function handleEditClick({ item }) {
     setIsOpen(true);
+
   }
 
   return (
-    <Flex p={2} display="block">
-      <Box p={1} shadow="md" borderWidth="1px" backgroundColor='white'>
+    <Flex p={2} display="block" >
+      <Box p={1} boxShadow='dark-lg' borderWidth="1px" backgroundColor='white'>
         <Heading fontSize="md">
           
           {item.title}
@@ -24,7 +25,7 @@ function DisplayTask({  item }) {
             <EditIcon />
           </Button>
           
-          <EditModal isOpen={isOpen} setIsOpen={setIsOpen} item={item} />
+          <EditModal setCreated={setCreated} isOpen={isOpen} setIsOpen={setIsOpen} item={item} />
         
         </Heading>
         

@@ -8,6 +8,8 @@ import CreateModal from "./components/CreateModal";
 
 function App() {
   const [isOpen, setIsOpen] = useState(false);
+  const [created, setCreated] = useState(false);
+  
 
   function handleCreateClick() {
     setIsOpen(true);
@@ -36,8 +38,9 @@ function App() {
       <CreateModal
         isOpen={isOpen}
         setIsOpen={setIsOpen}
+        setCreated ={setCreated}
       />
-      <ShowToDo setIsOpen = {setIsOpen}/>
+      <ShowToDo created={created} setCreated ={setCreated} />
 
       <HStack padding={4} justifyContent="center" width="100%">
         <Heading fontSize="md">@devtools2023</Heading>

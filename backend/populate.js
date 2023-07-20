@@ -38,5 +38,5 @@ const keepOne = async () =>{
     }
 }
 
-// start()
-keepOne();
+start()
+// keepOne();

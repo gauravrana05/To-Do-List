@@ -6,7 +6,7 @@ import axios from "axios"
 const baseURL = "http://localhost:3000/api/v1/tasks/"
 
 
-const EditModal = ({ isOpen, setIsOpen, item }) => {
+const EditModal = ({ setCreated, isOpen, setIsOpen, item }) => {
 
   const [modalTitle, setModalTitle] = useState(item.title)
   const [modalDescription, setModalDescription] = useState(item.description)
@@ -54,6 +54,7 @@ const EditModal = ({ isOpen, setIsOpen, item }) => {
     item.points = modalPoints
 
     await axios.patch(`${baseURL}${item._id}`, item)
+    setCreated((prev) => !prev);
     setIsOpen(false)
   }
   return (

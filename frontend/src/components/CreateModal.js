@@ -22,7 +22,7 @@ import axios from "axios"
 
 const baseURL = "http://localhost:3000/api/v1/tasks/"
 
-const CreateModal = ({ isOpen, setIsOpen }) => {
+const CreateModal = ({ isOpen, setIsOpen, setCreated }) => {
 
   
   const [tasks, setTasks] =  useState({
@@ -56,6 +56,7 @@ const CreateModal = ({ isOpen, setIsOpen }) => {
       await axios.post(baseURL, task).then((res) => setTasks(tasks))
 
     setIsOpen(false)
+    setCreated((last) => !last)
   }
   return (
 
