@@ -2,7 +2,7 @@ import { HStack, Badge } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import DisplayList from "./DisplayList";
-const baseURL = "http://localhost:3000/api/v1/tasks/";
+const baseURL = "https://todo-app-3cwo.onrender.com/api/v1/tasks/";
 
 export default function ShowToDo({created, setCreated}) {
   const [tasks, setTasks] = useState("");
